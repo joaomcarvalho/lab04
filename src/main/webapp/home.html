@@ -1,0 +1,125 @@
+<nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+           <md-button class="md-raised" href="#perfil" data-toggle="tab">Perfil</md-button>
+           <md-button class="md-raised md-primary" href="#watchlist" data-toggle="tab">WatchList</md-button>       
+       
+        </div>
+    <div class="navbar-collapse collapse">
+      <md-button class="btn btn-danger navbar-right" data-ng-click="ctrl.logout()">Sair</md-button>
+      <form class="navbar-form navbar-right" data-ng-submit="ctrl.search(searchText,$event)">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Pesquisar" ng-model="searchText" data-target="#pesquisa">
+            </div>
+          <button type="submit" class="btn btn-warning" 
+          		data-toggle="tab" data-target="#pesquisa"
+          		data-ng-click="ctrl.search(searchText)">Pesquisar</button>
+      </form>
+   	  
+    </div>
+    </div>
+  </nav>
+
+ <div class="tab-content">
+  <!-- SEARCH -->
+  
+  <div id="pesquisa" class="tab-pane">
+  	<div data-ng-repeat="serie in ctrl.series">
+  		<div class="col-lg-3">
+  			<div id="flex">
+  				<div id="sizeCard" class="thumbnail grow">
+  					<img title="{{serie.Title}}" id="imagesize" data-ng-src="{{serie.Poster}}" id="sizeCard">
+  					<p>{{serie.Title}}</p>
+  					<button class="btn btn-success btn-block" 
+  							data-ng-click="ctrl.adicionarAoPerfil($event, serie)">Adicionar ao Perfil
+  					</button>
+  					<button class="btn btn-primary btn-block" 
+  							data-ng-click="ctrl.adicionarAoWatchList($event, serie)">Adicionar ao WatchList
+  					</button>
+  				</div>
+  			</div>
+  		</div>		
+  	</div>
+  </div>
+ 
+  <!-- PERFIL -->
+  <div id="perfil" class="tab-pane fade in active">
+  	<div data-ng-repeat="serie in ctrl.seriesPerfil">
+  		<div class="col-lg-3">
+  			<div id="flex">
+  				<div id="sizeCard" class="thumbnail grow">
+  					<img title="{{serie.Title}}" id="imagesize" data-ng-src="{{serie.Poster}}" id="sizeCard">
+  					<p>{{serie.Title}}</p>
+  					<button class="btn btn-success btn-block" 
+  							data-toggle="modal"
+  							data-target="#modalperfil{{$index}}">Info
+  					</button>
+  					<button class="btn btn-danger btn-block" 
+  							data-ng-click="ctrl.removerDoPerfil($event, serie)">Remover
+  					</button>
+  				</div>
+  			</div>
+  		</div>		
+  		<div id="modalperfil{{$index}}" class="modal fade" role="dialog">
+  			<div class="modal-dialog modal-lg">
+  				<div class="modal-content">
+  					<div class="modal-header">
+  						<button type="button" class="close" data-dismiss="modal">&times;</button>
+  						<h4 class="modal-title text-center">{{serie.Title}}</h4>
+  					</div>
+  					<div class="modal-body">
+  						<div class="row">
+  							<div class="col-md-4">
+  								<img title="{{serie.Title}}" id="imagesize" data-ng-src="{{serie.Poster}}">
+  							</div>
+  							<div class="col-md-8"><p>{{serie.Plot}}</p></div>
+  							<div class="col-md-8">
+  								<p><b>Média no IMDb:</b> {{serie.imdbRating}}</p>
+  								<p><b>Classificação Indicativa:</b> {{serie.Rated}}</p>
+  								<p><b>Minha Avaliação:</b> {{serie.nota}}</p>
+  								<p><b>Último Episódio Visto:</b> {{serie.ultimoEpisodio}}</p>
+  								<div class="input-group input">
+  									<input type="text" class="form-control" placeholder="Nota 0-10" data-ng-model="nota">
+										<div class="input-group-btn">
+											<button class="btn btn-info" type="submit" 
+													data-ng-click="ctrl.setNota($event,serie,nota)">Ok
+											</button>	
+										</div>
+  								</div>
+  								<div class="input-group input">
+  									<input type="text" class="form-control" placeholder="Último Episódio" data-ng-model="lastep">
+										<div class="input-group-btn">
+											<button class="btn btn-info" type="submit" 
+													data-ng-click="ctrl.setUltimoEpisodio(serie,lastep)">Ok
+											</button>	
+  										</div>
+  								</div>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+
+ </div>
+<!-- WATCHLIST -->
+ <div id="watchlist" class="tab-pane">
+  	<div data-ng-repeat="serie in ctrl.seriesWatchList">
+  		<div class="col-lg-3">
+  			<div id="flex">
+  				<div id="sizeCard" class="thumbnail grow">
+  					<img title="{{serie.Title}}" id="imagesize" data-ng-src="{{serie.Poster}}" id="sizeCard">
+  					<p>{{serie.Title}}</p>
+  					<button class="btn btn-success btn-block" 
+  							data-ng-click="ctrl.adicionarAoPerfilERemoverWatchList($event, serie)">Adicionar ao Perfil
+  					</button>
+  					<button class="btn btn-danger btn-block" 
+  							data-ng-click="ctrl.removerWatchList(serie)">Remover do WatchList
+  					</button>
+  				</div>
+  			</div>
+  		</div>		
+  	</div>
+  </div>	
+ </div>
